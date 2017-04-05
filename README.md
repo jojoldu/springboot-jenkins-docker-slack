@@ -64,7 +64,7 @@ docker ps -a
 수고하셨습니다!
 젠킨스 설치가 끝났으니 이제 Github 연동을 진행해보겠습니다.  
 
-### Github 연동
+### 젠킨스 설정
 원래는 Github 플러그인을 별도로 설치해야하지만, 젠킨스 설치단계에서 **install suggested plugins**을 선택했기 때문에 이미 설치되어있어 이부분은 생략하겠습니다.  
 (혹시나 젠킨스 컨테이너를 다시 시작해야 한다면 ```docker start jenkins```로 설치된 젠킨스 컨테이너를 실행 후, ```docker exec -it jenkins /bin/bash``` 를 입력하시면 됩니다.)  
 (```docker run```은 재설치를 합니다.)  
@@ -84,6 +84,7 @@ docker ps -a
 ![Github url 복사](./images/github_url복사.png)
 
 좀전에 열어놓은 ```Item 설정화면```의 소스코드관리탭에서 ```Git``` 라디오 버튼을 선택하면 git url을 입력하는 곳이 나오는데 이곳에, 복사된 url을 입력합니다.  
+(참고로 젠킨스 도커 컨테이너는 이미 Git이 설치된 상태로 생성되니 별도의 Git 설치가 필요하지 않습니다.)  
 
 ![소스코드관리 탭](./images/젠킨스_소스코드관리탭.png)
 
@@ -106,8 +107,52 @@ branch의 경우 master push시에 젠킨스 빌드가 관리 되도록 master�
 젠킨스 설정은 이제 끝이났습니다.  
 Github 설정으로 가보겠습니다.  
 
-* ngrok 설치
-[ngrok](https://ngrok.com/)
+### Github 설정
+본인의 깃허브 프로젝트 우측 상단에 위치한 ```Settings```을 클릭합니다.  
+
+![깃허브 세팅](./images/깃허브_세팅.png)
+
+Settings로 이동후, ```Add service``` 클릭 후, ```Jenkins(Github plugin)```을 검색하여 클릭합니다.  
+
+![깃허브 서비스 등록](./images/깃허브_서비스등록.png)
+
+서비스 등록 페이지로 이동하시면 ```Jenkins hook url``` 입력란이 보이실텐데요, 저희가 설치한 젠킨스의 주소를 입력해야합니다.  
+하지만, 여기서 ```localhost```를 입력하게 되면 Github 서버의 ```localhost```로 인식하게 되니, **젠킨스가 외부 IP**를 가지게 해야합니다.  
+이를 위해 **ngrok**을 설치하겠습니다.  
+ngrok에 대한 자세한 설명은 outsider님께서 이미 정리하셨기 때문에 [참고](https://blog.outsider.ne.kr/1159)하시면 됩니다.  
+  
+[ngrok](https://ngrok.com/)에 접속하여 **본인의 PC**에 맞게 다운로드합니다.  
+(젠킨스 도커 컨테이너의 OS가 아닙니다.)  
+다운 받은 ngrok 스크립트 파일은 본인의 ```PATH```아래에 옮깁니다.  
+(저의 경우 ```/usr/local/bin```에 옮겼습니다.)  
+
+![ngrok 설치](./images/ngrok_설치.png)
+
+EXAMPLES에 나와있듯이, 현재 로컬에 열려있는 포트 중 외부에 열고자 하는 포트를 입력하면 바로 ngrok 도메인과 연결해줍니다.  
+젠킨스 컨테이너의 포트는 젠킨스 접속시 사용하는 포트(저는 32771입니다)이니 이를 ngrok과 연결하겠습니다.  
+
+![ngrok 연결](./images/ngrok_연결.png)
+
+![ngrok 연결완료](./images/ngrok_연결완료.png)
+
+보시면 ```http://c66b71a2.ngrok.io/```과 연결되었음을 확인할 수 있습니다.  
+브라우저에서 연결된 호스트로 접속해보겠습니다.  
+
+![ngrok 연결확인](./images/ngrok_연결확인.png)
+
+짠! 이젠 외부에서 저희의 젠킨스 컨테이너로 접속을 할 수 있게 되었습니다.  
+즉, **Github에서 webhook**을 할 수 있게 되었습니다.  
+좀 전에 열어둔 Github service 페이지에 있는 Jenkins hook url에 ngrok 주소를 입력하겠습니다.  
+
+![깃허브 hook등록](./images/깃허브_웹훅등록.png)
+
+주의하셔야할 점은 본인의 **젠킨스 주소 뒤에** ```/github-webhook```을 추가해야하는 것입니다.  
+깃허브가 푸시가 되면 해당 ```path```로 hook을 하기 때문입니다.   
+(젠킨스의 깃허브 플러그인으로 ```/github-webhook```는 이미 젠킨스에 포함되어 있습니다.)  
+
+자 이제 젠킨스와 Github의 연동이 끝났습니다!  
+그럼 확인을 해볼까요?  
+
 
 ## Java
 
