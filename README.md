@@ -153,6 +153,9 @@ Settings로 이동후, ```Add service``` 클릭 후, ```Jenkins(Github plugin)``
 서비스 등록 페이지로 이동하시면 ```Jenkins hook url``` 입력란이 보이실텐데요, 저희가 설치한 젠킨스의 주소를 입력해야합니다.  
 하지만, 여기서 ```localhost```를 입력하게 되면 Github 서버의 ```localhost```로 인식하게 되니, **젠킨스가 외부 IP**를 가지게 해야합니다.  
 이를 위해 **ngrok**을 설치하겠습니다.  
+
+### ngrok 설정
+
 ngrok에 대한 자세한 설명은 outsider님께서 이미 정리하셨기 때문에 [참고](https://blog.outsider.ne.kr/1159)하시면 됩니다.  
   
 [ngrok](https://ngrok.com/)에 접속하여 **본인의 PC**에 맞게 다운로드합니다.  
