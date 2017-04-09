@@ -307,5 +307,6 @@ push를 하시고 slack의 ```#jenkins``` 채널을 확인해보시면
 긴글 끝까지 읽어주셔서 감사합니다!
 
 ## 참고
+* [꿀벌개발일지](http://ohgyun.com/561)
 * [iamkyu.com](http://www.iamkyu.com/121)
 * [젠킨스 위키](https://wiki.jenkins-ci.org/display/JENKINS/GitHub+plugin)
