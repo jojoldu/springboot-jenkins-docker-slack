@@ -33,7 +33,7 @@ Github에 push 하셨다면 이제 본격적으로 시작하겠습니다.
 
 ### 젠킨스 도커 컨테이너 설치
 
-위 링크를 통해 젠킨스를 설치하셨다면 도커의 Kitematic을 실행합니다.  
+[링크](https://subicura.com/2017/01/19/docker-guide-for-beginners-1.html)를 통해 젠킨스를 설치하셨다면 도커의 Kitematic을 실행합니다.  
 ![Kitematic](./images/kitematic.png)
 
 Kitematic에 로그인 하신뒤, 접속하시면 아래와 같이 검색창과 추천 컨테이너 리스트가 등장합니다.  
